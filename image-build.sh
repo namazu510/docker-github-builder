@@ -1,4 +1,4 @@
-#!/usr/bin bash
+#!/bin/bash
 set -eu
 
 # ./image-build -r namazu510/mofumofu.git -t GITHUB-TOKEN -c COMMIT-ID
@@ -12,8 +12,8 @@ do
 done
 
 # clone
-git clone "https://${USER}:${TOKEN}@github.com/${USER}/${REPO}" $REPO
-cd $REPO
+git clone "https://${USER}:${TOKEN}@github.com/${USER}/${REPO}" repos/$REPO
+cd repos/$REPO
 git checkout $COMMIT_ID
 
 # build

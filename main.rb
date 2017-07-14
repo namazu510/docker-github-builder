@@ -13,7 +13,7 @@ EM::WebSocket.start({host: HOST , port: PORT}) do |ws_conn|
   ws_conn.onmessage do |message|
     puts "recived message #{message}"
     params = JSON.parse(message)
-    cmd  = "./image-build -r #{params.repo} -t #{params.token} -c #{params.commit_id}"
+    cmd  = "./image-build.sh -r #{params["repo"]} -t #{params["token"]} -c #{params["commit_id"]}"
 
     ws_conn.send(JSON.generate({type: "start", data: params}))
     Open3.popen3(cmd) do |i, o, e, w|
