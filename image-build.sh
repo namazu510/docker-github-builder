@@ -17,7 +17,7 @@ cd repos/$REPO
 git checkout $COMMIT_ID
 
 # build
-TAG="reg.k8s.internal.t-lab.cs.teu.ac.jp/${USER}/${REPO}:${COMMIT_ID}"
+TAG="${DOCKER_REG}/${USER}/${REPO}:${COMMIT_ID}"
 docker build -t $TAG .
 
 # push
