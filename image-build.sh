@@ -11,6 +11,9 @@ do
   esac
 done
 
+mkdir -p repos
+rm -rf repos/$REPO
+
 # clone
 git clone "https://${USER}:${TOKEN}@github.com/${USER}/${REPO}" repos/$REPO
 cd repos/$REPO

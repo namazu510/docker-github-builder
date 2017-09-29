@@ -30,7 +30,7 @@ EM::WebSocket.start({host: HOST , port: PORT}) do |ws_conn|
       ws_conn.send(JSON.generate({
         type: "exit",
         data: {
-          code: w.value.exit
+          code: w.value.to_i
         }
       }))
     end
