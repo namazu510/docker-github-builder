@@ -31,7 +31,7 @@ class BuildInfo
   end
 
   def http_parse
-    m = @params['repo'].match(/^https?:\/\/(.+)\/(.+)\.git$/)
+    m = @params['repo'].match(/^https?:\/\/([^\/]+)\/(.+)\.git$/)
     {
         repo_uri: m[2],
         clone_dir: "repos/git@#{m[1]}/#{m[2]}",
