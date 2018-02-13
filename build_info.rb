@@ -20,6 +20,7 @@ class BuildInfo
     user = @params['repo'].split('/')[0]
     repo = @params['repo'].split('/')[1]
     {
+        commit_id: @params['commit_id'],
         repo_uri: "#{user}/#{repo}",
         clone_cmd: "git clone https://#{user}:#{@params['token']}@github.com/#{user}/#{repo}",
         clone_dir: "repos/git@github.com/#{user}/#{repo}"
@@ -33,6 +34,7 @@ class BuildInfo
   def http_parse
     m = @params['repo'].match(/^https?:\/\/([^\/]+)\/(.+)\.git$/)
     {
+        commit_id: @params['commit_id'],
         repo_uri: m[2],
         clone_dir: "repos/git@#{m[1]}/#{m[2]}",
         clone_cmd: "git clone #{@params['repo']}"
@@ -54,12 +56,13 @@ class BuildInfo
       `mkdir -p keys`
       filename = "keys/#{Digest::MD5.hexdigest(@params['key'])}"
       File.open(filename, 'w') do |f|
-        f.puts params['key']
+        f.print @params['key']
       end
       clone_cmd = "GIT_SSH_COMMAND='ssh -i #{filename} -F /dev/null' " + clone_cmd
     end
 
     {
+        commit_id: @params['commit_id'],
         repo_uri: repo_uri,
         clone_dir: clone_dir,
         clone_cmd: clone_cmd
