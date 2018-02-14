@@ -54,8 +54,8 @@ class BuildInfo
     clone_cmd = "git clone #{@params['repo']}"
     if @params['key']
       `mkdir -p keys`
-      filename = "keys/#{Digest::MD5.hexdigest(@params['key'])}"
-      File.open(filename, 'w') do |f|
+      filename = "./keys/#{Digest::MD5.hexdigest(@params['key'])}"
+      File.open(filename, 'w', 0600) do |f|
         f.print @params['key']
       end
       clone_cmd = "GIT_SSH_COMMAND='ssh -i #{filename} -F /dev/null' " + clone_cmd
