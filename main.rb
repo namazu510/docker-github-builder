@@ -25,13 +25,13 @@ EM::WebSocket.start({host: HOST , port: PORT}) do |ws_conn|
     `mkdir repo`
     `rm -rf #{build.clone_dir}`
     Open3.popen3_with_ws("#{build.clone_cmd} #{build.clone_dir}", ws_conn) do |status|
-      return ws_conn.close if status != 0
+      ws_conn.close if status != 0
     end
 
     # CHECKOUT
     if build.commit_id
       Open3.popen3_with_ws("cd #{build.clone_dir} && git checkout #{build.commit_id}", ws_conn) do |status|
-        return ws_conn.close if status != 0
+        ws_conn.close if status != 0
       end
     end
 
@@ -43,7 +43,6 @@ EM::WebSocket.start({host: HOST , port: PORT}) do |ws_conn|
         ws_conn.send(JSON.generate({type: 'exit', data:
             { code: state, repo_url: docker_tag, commit_id: commit_id}}))
         ws_conn.close
-        return
       end
     end
 
